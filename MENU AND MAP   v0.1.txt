@@ -1,0 +1,149 @@
+#include <iostream> 
+#include <conio.h>
+#include <windows.h>
+using namespace std;
+
+#define UP 72
+#define DOWN 80
+#define LEFT 75
+#define RIGHT 77
+
+// dim harta
+int posX = 10;
+int posY = 25;
+
+void playGame();
+
+typedef struct { short X; short Y; }coord;
+void gotoXY(short linie, short coloana) {
+	COORD coord; //structura care defineste coordonatele unui punct de pe consola
+	coord.X = coloana;
+	coord.Y = linie;
+
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleCursorPosition(hConsole, coord);
+}
+
+void drawMap(int linii, int coloane) {
+	for (int i = 0; i <= linii; i++) {
+		for (int j = 0; j <= coloane; j++)
+			if (i == linii || j == coloane || i == 0 || j == 0) {
+				gotoXY(i, j);
+				printf("#");
+			}
+	}
+	gotoXY(5, 30);
+	cout << "Score: 393";
+	for (int i = 4; i < 8; i++) {
+		gotoXY(i, 3);
+		cout << "X";
+	}
+	for (int i = 8; i < 13; i++) {
+		gotoXY(3, i);
+		cout << "X";
+	}
+	for (int i = 15; i < 20; i++) {
+		gotoXY(8, i);
+		cout << "X";
+	}
+	for (int i = 4; i < 9; i++) {
+		gotoXY(6, i);
+		cout << "X";
+	}
+	for (int i = 2; i < 6; i++) {
+		gotoXY(i, 18);
+		cout << "X";
+	}
+	for (int i = 6; i < 9; i++) {
+		gotoXY(i, 9);
+		cout << "X";
+	}
+}
+
+void cc() {
+	system("cls");
+}
+
+void mainMenu() {
+	cout << "  Welcome, explorer!\nPress a key to select:\n\n1 - Start Game\n2 - How to play!\n";
+	char userInput;
+	userInput = _getch();
+	while (userInput != '1' && userInput != '2' && userInput != '0') {
+		cout << "\nError! ";
+		cout << "Insert a valid number!\n";
+		userInput = _getch();
+	}
+	switch (userInput) {
+	case '1':
+		cc();
+		playGame();
+		break;
+	case '2':
+		cc();
+		cout << "Despre";
+		break;
+	case '0':
+		exit(0);
+	}
+}
+
+void player() {
+	cout << "O";
+}
+
+void playGame() {
+
+	int linie = 1, coloana = 1;
+	drawMap(posX, posY);
+	int direction = 0;
+	while (1) {
+		int sus = 1, dreapta = 1;
+		switch ((direction = _getch())) {
+		case UP:
+			if (linie > 1) {
+				                                              
+				
+				gotoXY(linie, coloana);
+				cout << " ";
+				gotoXY(linie -= 1, coloana);
+				player();
+			}
+			break;
+		case DOWN:
+			if (linie < posX-1) {
+				
+				
+				gotoXY(linie, coloana);
+				cout << " ";
+				gotoXY(linie += 1, coloana);
+				player();
+			}
+			break;
+		case LEFT:
+			if (coloana > 1) {
+				
+				
+				gotoXY(linie, coloana);
+				cout << " ";
+				gotoXY(linie, coloana -= 1);
+				player();
+			}
+			break;
+		case RIGHT:
+			if (coloana < posY-1) {
+				
+				
+				gotoXY(linie, coloana);
+				cout << " ";
+				gotoXY(linie, coloana += 1);
+				player();
+			}
+			break;
+		}
+	}
+
+}
+
+void main() {
+	mainMenu();
+}
